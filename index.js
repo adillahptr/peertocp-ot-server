@@ -127,7 +127,6 @@ io.on("connection", (socket) => {
     const docName = idToDoc.get(socket.id)
     idToDoc.delete(socket.id)
     const doc = getDoc(docName)
-    console.log(socket.id)
     doc.peerInfo.delete(socket.id)
     doc.notifyNewPeers(docName)
   })
