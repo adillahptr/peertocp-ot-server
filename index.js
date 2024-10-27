@@ -1,8 +1,9 @@
 const map = require('lib0/dist/map.cjs')
 const {ChangeSet, Text} = require("@codemirror/state")
-const http = require("http")
+const https = require("https")
 const {uuidv4} = require("lib0/random");
 const socketIo = require("socket.io");
+const fs = require("fs");
 
 const idToDoc = new Map();
 
@@ -24,7 +25,10 @@ const docs = new Map()
 const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT || 3000
 
-const server = http.createServer((request, response) => {
+const key = fs.readFileSync("./private.key");
+const cert = fs.readFileSync("./certificate.crt");
+
+const server = https.createServer({key, cert},(request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/plain' })
   response.end('okay')
 })
